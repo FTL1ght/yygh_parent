@@ -7,16 +7,11 @@
     <version>1.0</version>
     <modules>
         <module>common</module>
-        <module>common/common_util</module>
-        <module>common/service_util</module>
-        <module>common/common_util</module>
-        <module>common/service_util</module>
         <module>model</module>
         <module>service</module>
-        <module>service/service_user</module>
     </modules>
-    <name>yygh_parent</name>
-    <description>yygh_parent</description>
+    <name>yygh-parent</name>
+    <description>yygh-parent</description>
     <packaging>pom</packaging>
 
 <!--    <properties>-->
@@ -35,6 +30,8 @@
     </parent>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <cloud.version>Hoxton.RELEASE</cloud.version>
         <alibaba.version>2.2.0.RELEASE</alibaba.version>

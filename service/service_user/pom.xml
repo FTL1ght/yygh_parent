@@ -3,14 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>yygh_parent</artifactId>
+        <artifactId>service</artifactId>
         <groupId>com.hospital</groupId>
         <version>1.0</version>
-        <relativePath>../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>service_user</artifactId>
+    <packaging>jar</packaging>
+    <name>service-user</name>
+    <description>service-user</description>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

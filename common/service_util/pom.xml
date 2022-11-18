@@ -12,6 +12,8 @@
 
     <artifactId>service_util</artifactId>
     <version>1.0</version>
+    <name>service-util</name>
+    <description>service-util</description>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
