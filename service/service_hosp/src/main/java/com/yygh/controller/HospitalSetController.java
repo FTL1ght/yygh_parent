@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ftl1ght.yygh.common.result.Result;
 import com.ftl1ght.yygh.common.util.MD5;
+import com.yygh.exception.YyghException;
 import com.yygh.model.hosp.HospitalSet;
 import com.yygh.service.HospitalSetService;
 import com.yygh.vo.hosp.HospitalSetQueryVo;
@@ -21,6 +22,7 @@ import java.util.Random;
  */
 @RestController
 @RequestMapping("/admin/hosp/hospSet")
+@CrossOrigin    //解决跨域问题
 public class HospitalSetController {
 
     @Autowired
@@ -49,12 +51,12 @@ public class HospitalSetController {
     //mybatisPlus封装了条件查询带分页
     //条件查询带分页
     //为了前端方便(前端提供json数据),将原get请求，改为post请求，并为hospitalSetQueryVo添加@RequestBody标签
-    @PostMapping("findPageHospSet/{page}/{limit}")
-    public Result findPageHospSet(@PathVariable Long page,
+    @PostMapping("findPageHospSet/{current}/{limit}")
+    public Result findPageHospSet(@PathVariable Long current,
                                   @PathVariable Long limit,
                                   @RequestBody(required = false) HospitalSetQueryVo hospitalSetQueryVo){
         //对page和limit进行封装
-        Page<HospitalSet> setPage = new Page<>(page, limit);
+        Page<HospitalSet> setPage = new Page<>(current, limit);
 
         //获取筛选条件
         String hosname = hospitalSetQueryVo.getHosname();
@@ -97,6 +99,11 @@ public class HospitalSetController {
     //根据id获取医院设置
     @GetMapping("getHospSet/{id}")
     public Result getHospById(@PathVariable Long id){
+//        try {
+//            int i = 10/0;
+//        } catch (Exception e) {
+//            throw new YyghException("失败",201);
+//        }
         HospitalSet hosp = hospitalSetService.getById(id);
         if (hosp!=null){
             return Result.ok(hosp);
@@ -135,6 +142,9 @@ public class HospitalSetController {
                               @PathVariable Integer status){
         HospitalSet hospitalSet = hospitalSetService.getById(id);
         hospitalSet.setStatus(status);
+
+        //更新数据
+        hospitalSetService.updateById(hospitalSet);
 
         return Result.ok();
     }
