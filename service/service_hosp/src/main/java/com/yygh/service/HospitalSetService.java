@@ -9,4 +9,7 @@ import com.yygh.model.hosp.HospitalSet;
  * @create 2022-11-17 14:46
  */
 public interface HospitalSetService extends IService<HospitalSet> {
+
+    //2 根据传递过来的医院编码，查询数据库，查询签名
+    String getSignKey(String hoscode);
 }

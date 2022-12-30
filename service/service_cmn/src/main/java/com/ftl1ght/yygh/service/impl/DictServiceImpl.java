@@ -1,6 +1,7 @@
 package com.ftl1ght.yygh.service.impl;
 
 import com.alibaba.excel.EasyExcel;
+import com.baomidou.mybatisplus.core.conditions.query.Query;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ftl1ght.yygh.listener.DictListener;
@@ -8,6 +9,7 @@ import com.ftl1ght.yygh.mapper.DictMapper;
 import com.ftl1ght.yygh.service.DictService;
 import com.yygh.model.cmn.Dict;
 import com.yygh.vo.cmn.DictEeVo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -74,6 +76,44 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public String getDictName(String dictCode, String value) {
+
+        //如果dictCode为空
+        if (StringUtils.isEmpty(dictCode)){
+            QueryWrapper<Dict> wrapper = new QueryWrapper<>();
+            wrapper.eq("value",value);
+            Dict dict = baseMapper.selectOne(wrapper);
+            return dict.getName();
+        }else{
+            //先根据dictCode查询dict对象，得到dict的id值
+            QueryWrapper<Dict> wrapper = new QueryWrapper<>();
+            wrapper.eq("dict_code",dictCode);
+            Dict codeDict = baseMapper.selectOne(wrapper);
+            Long parent_id  = codeDict.getId();
+            //根据parent_id和value进行查询
+            Dict finalDict = baseMapper.selectOne(new QueryWrapper<Dict>()
+                    .eq("parent_id", parent_id)
+                    .eq("value", value));
+
+            return finalDict.getName();
+
+        }
+    }
+
+    @Override
+    public List<Dict> findByDictCode(String dictCode) {
+
+        //根据dictCode获取id
+        QueryWrapper<Dict> wrapper = new QueryWrapper<>();
+        wrapper.eq("dict_code",dictCode);
+        Dict dict = baseMapper.selectOne(wrapper);
+        //根据id获取下层子节点
+        List<Dict> childData = this.findChildData(dict.getId());
+
+        return childData;
     }
 
     //判断id下是否有子节点

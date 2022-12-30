@@ -9,6 +9,8 @@
         <module>common</module>
         <module>model</module>
         <module>service</module>
+        <module>service_client</module>
+        <module>server_gateway</module>
     </modules>
     <name>yygh-parent</name>
     <description>yygh-parent</description>

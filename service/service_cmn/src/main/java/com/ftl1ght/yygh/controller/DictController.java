@@ -23,6 +23,14 @@ public class DictController {
     @Autowired
     private DictService dictService;
 
+    //根据dictCode查询下级节点
+    @GetMapping("findByDictCode/{dictCode}")
+    public Result findByDictCode(@PathVariable String dictCode){
+        List<Dict> list = dictService.findByDictCode(dictCode);
+
+        return Result.ok(list);
+    }
+
     //导入数据字典
     @PostMapping("importData")
     public Result importDict(MultipartFile file){
@@ -45,4 +53,23 @@ public class DictController {
         List<Dict> list = dictService.findChildData(id);
         return Result.ok(list);
     }
+
+    //根据dictCode和value进行查询
+    @GetMapping("getName/{dictCode}/{value}")
+    public String getName(@PathVariable String dictCode,
+                          @PathVariable String value){
+
+        String dictName = dictService.getDictName(dictCode,value);
+        return dictName;
+    }
+
+
+    //根据value进行查询
+    @GetMapping("getName/{value}")
+    public String getName(@PathVariable String value){
+
+        String dictName = dictService.getDictName("",value);
+        return dictName;
+    }
+
 }
