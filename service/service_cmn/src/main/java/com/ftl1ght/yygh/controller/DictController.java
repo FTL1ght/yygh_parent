@@ -16,7 +16,6 @@ import java.util.List;
  * @create 2022-11-23 16:27
  */
 @RestController
-@CrossOrigin
 @RequestMapping("/admin/cmn/dict")
 public class DictController {
 

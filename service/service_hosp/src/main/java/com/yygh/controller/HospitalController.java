@@ -16,7 +16,6 @@ import java.util.Map;
  * @create 2022-12-26 21:42
  */
 @RestController
-@CrossOrigin
 @RequestMapping("/admin/hosp/hospital")
 public class HospitalController {
 

@@ -3,6 +3,8 @@ package com.yygh.repository;
 import com.yygh.model.hosp.Hospital;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import java.util.List;
+
 /**
  * @author FTL1ght
  * @Description
@@ -10,4 +12,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  */
 public interface HospitalRepository extends MongoRepository<Hospital,String> {
     Hospital getHospitalByHoscode(String hoscode);
+
+
+    List<Hospital> findHospitalByHosnameLike(String hosname);
 }
